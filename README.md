@@ -8,15 +8,15 @@ This is a basic study about REST API build with ASP .NET Core.
 
 This is repository still under construction yet, and is in a very basic status, but will be released soon:
 
-| Next features |
+| Next features :rocket: |
 | ------------ |
-| Conclusion the CRUD operation. |
+| :white_check_mark: ~~Conclusion the CRUD operation.~~ |
 | Addition of an access control to POST/PUT/DELETE methods.| 
 | Use of AI to do smart searches.|
 | Change the infrastructure to the cloud (Azure).|
 
 Get in touch, it will be my greatest pleasure to talk about technologies with you.
 
-My LinkedIn profile is: [jeanjmichel](https://www.linkedin.com/in/jeanjmichel/).
+My LinkedIn profile is: :link: [jeanjmichel](https://www.linkedin.com/in/jeanjmichel/).
 
-And my blog (still in Portuguese) on Medium is: https://jeanjmichel.medium.com.
+And my blog (still in Portuguese) on Medium is: :link: https://jeanjmichel.medium.com.
