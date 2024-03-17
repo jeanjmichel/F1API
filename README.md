@@ -16,3 +16,4 @@ This is repository still under construction yet, and is in a very basic status, 
 
 Get in touch, it will be my greatest pleasure to talk about technologies with you.
 My LinkedIn profile is: [jeanjmichel](https://www.linkedin.com/in/jeanjmichel/).
+And my blog (still in Portuguese) on Medium is: https://jeanjmichel.medium.com.
