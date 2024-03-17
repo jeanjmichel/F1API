@@ -5,6 +5,7 @@ Hi, I am Jean, an IT professional who loves studying about programming and teach
 ![Jean J. Michel]( https://s3.amazonaws.com/x-publico/acesso-livre/jean.png)
 
 This is a basic study about REST API build with ASP .NET Core. 
+
 This is repository still under construction yet, and is in a very basic status, but will be released soon:
 
 | Next features |
@@ -15,5 +16,7 @@ This is repository still under construction yet, and is in a very basic status, 
 | Change the infrastructure to the cloud (Azure).|
 
 Get in touch, it will be my greatest pleasure to talk about technologies with you.
+
 My LinkedIn profile is: [jeanjmichel](https://www.linkedin.com/in/jeanjmichel/).
+
 And my blog (still in Portuguese) on Medium is: https://jeanjmichel.medium.com.
