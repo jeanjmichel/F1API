@@ -85,5 +85,25 @@ namespace F1API.DAOs
             Seasons.Add(new Season(2023, 22, 20, "2023 Bahrain Grand Prix", "2023 Abu Dhabi Grand Prix", "Max Verstappen (NED) (Red Bull)", "Red Bull-Honda RBPT (AUT)"));
             Console.WriteLine("Initialized SeasonDAO.");
         }
+    
+        public Season UpdateSeasonData(Season season)
+        {
+            Season? _season = this.Seasons.SingleOrDefault(s => s.SeasonYear == season.SeasonYear);
+
+            _season.Races = season.Races;
+            _season.Countries = season.Countries;
+            _season.FirstRace = season.FirstRace;
+            _season.LastRace = season.LastRace;
+            _season.DriversChampion = season.DriversChampion;
+            _season.ConstructorsChampion = season.ConstructorsChampion;
+
+            return _season;
+        }
+
+        public void DeleteSeasonData(int seasonYear)
+        {
+            Season? _season = this.Seasons.SingleOrDefault(s => s.SeasonYear == seasonYear);
+            var isDeleted = this.Seasons.Remove(_season);
+        }
     }
 }
