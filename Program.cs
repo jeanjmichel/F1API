@@ -1,10 +1,14 @@
 using F1API.DAOs;
+using F1API.Services;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<SeasonDAO>();
+builder.Services.TryAddScoped<IAuthorizerService, AuthorizerService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
