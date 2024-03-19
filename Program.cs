@@ -5,15 +5,18 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add fake DAO to the container.
+builder.Services.AddSingleton<SeasonsDAO>();
+
 // Add services to the container.
-builder.Services.AddSingleton<SeasonDAO>();
 builder.Services.TryAddScoped<IAuthorizerService, AuthorizerService>();
+builder.Services.TryAddScoped<ISeasonsService, SeasonsService>();
 
-
+// Add controllers to the container.
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -24,6 +27,31 @@ builder.Services.AddSwaggerGen(options =>
         Contact = new OpenApiContact {
             Name = "Jean J. Michel",
             Url = new Uri("https://www.linkedin.com/in/jeanjmichel/")
+        }
+    });
+
+    options.AddSecurityDefinition(name: "Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "The Authorization header use JWT and scheme Bearer. \r\n\r\n Informe 'Bearer' before the token."
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
         }
     });
 

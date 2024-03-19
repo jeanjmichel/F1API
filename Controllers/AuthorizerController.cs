@@ -9,10 +9,18 @@ namespace F1API.Controllers
     [ApiController]
     public class AuthorizerController : ControllerBase
     {
-
         private readonly IAuthorizerService _authorizerService;
 
+        /// <summary>
+        /// This method generate a JWT Token if the credentials is correct.
+        /// </summary>
+        /// <param name="user">A DTO containing the username and password to authenticate to the API.</param>
+        /// <returns>A JWT Token.</returns>
+        /// <response code="200">Sucess.</response>
+        /// <response code="401">Unauthorized.</response>
         [HttpPost("authorize", Name = "authorize")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult Authorize(UserDTO user)
         {
             APIResultData res = new APIResultData();

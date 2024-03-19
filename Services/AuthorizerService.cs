@@ -34,7 +34,7 @@ namespace F1API.Services
                             new Claim(type: ClaimTypes.Name, user.Username),
                             new Claim(type: ClaimTypes.Role, "authorized_guess")
                         },
-                        expires: DateTime.UtcNow.AddHours(1),
+                        expires: DateTime.UtcNow.AddDays(1),
                         signingCredentials: signinCredentials);
 
                     var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);

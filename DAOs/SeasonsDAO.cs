@@ -2,10 +2,10 @@
 
 namespace F1API.DAOs
 {
-    public class SeasonDAO
+    public class SeasonsDAO
     {
         public List<Season> Seasons { get; set; }
-        public SeasonDAO() {
+        public SeasonsDAO() {
             Console.WriteLine("Initializing SeasonDAO instance...");
             Seasons = new List<Season>();
             Console.WriteLine("Populating SeasonDAO.Seasons data...");
@@ -86,10 +86,11 @@ namespace F1API.DAOs
             Console.WriteLine("Initialized SeasonDAO.");
         }
     
-        public Season UpdateSeasonData(Season season)
+        public Season UpdateSeasonData(int seasonYear, Season season)
         {
-            Season? _season = this.Seasons.SingleOrDefault(s => s.SeasonYear == season.SeasonYear);
+            Season? _season = this.Seasons.SingleOrDefault(s => s.SeasonYear == seasonYear);
 
+            _season.SeasonYear = season.SeasonYear;
             _season.Races = season.Races;
             _season.Countries = season.Countries;
             _season.FirstRace = season.FirstRace;

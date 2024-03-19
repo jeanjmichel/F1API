@@ -10,8 +10,8 @@ namespace F1API.Controllers
     [ApiController]
     public class SeasonsController : ControllerBase
     {
-
-        private readonly SeasonDAO _seasonDAO;
+        private readonly ISeasonsService _seasonsService;
+        private readonly SeasonsDAO _seasonDAO;
 
         /// <summary>
         /// This method shows a summary of all F1 seasons (year, races, countries, 1st race and last race of the season and driver's champion and constructor's champion).
@@ -23,25 +23,12 @@ namespace F1API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetAllSeasons() {
-            APIResultData res = new APIResultData();
-            
-            if(_seasonDAO.Seasons.Count > 0)
-            {
-                res.ReturnedData = _seasonDAO.Seasons;
-                res.StatusCode = 200;
-                res.StatusMessage = "Ok";
-                res.Metadata = "Returned by F1 API, a free API for fans of Formula One!";
-            }
-            else
-            {
-                res.ReturnedData = null;
-                res.StatusCode = 404;
-                res.StatusMessage = "No F1 season found.";
-                res.Metadata = "Returned by F1 API, a free API for fans of Formula One!";
-                return NotFound(res);
-            }
-            
-            return Ok(res);
+            var result = _seasonsService.GetAllSeasons();
+
+            if(result.StatusCode == 200)
+                return Ok(result);
+
+            return NotFound(result);
         }
 
         /// <summary>
@@ -58,27 +45,15 @@ namespace F1API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetSeasonByYear(int seasonYear)
         {
-            APIResultData res = new APIResultData();
+            var result = _seasonsService.GetSeasonByYear(seasonYear);
 
-            Season? season = _seasonDAO.Seasons.SingleOrDefault(s => s.SeasonYear == seasonYear);
+            if (result.StatusCode == 200)
+                return Ok(result);
 
-            if (season != null)
-            {
-                res.ReturnedData = season;
-                res.StatusCode = 200;
-                res.StatusMessage = "OK";
-                res.Metadata = "Returned by F1 API, a free API for fans of Formula One!";
-            }
-            else
-            {
-                res.ReturnedData = null;
-                res.StatusCode = 404;
-                res.StatusMessage = "The F1 season not found.";
-                res.Metadata = "Returned by F1 API, a free API for fans of Formula One!";
-                return NotFound(res);
-            }
+            if (result.StatusCode == 404)
+                return NotFound(result);
 
-            return Ok(res);
+            return BadRequest();
         }
 
         /// <summary>
@@ -88,19 +63,17 @@ namespace F1API.Controllers
         /// <returns>The season data (year, races, countries, 1st race and last race of the season and driver's champion and constructor's champion) of created F1 season, or will returns some error if the parameter is invalid.</returns>
         /// <response code="201">Sucess.</response>
         /// <response code="400">If some parameter is invalid.</response>
-        [HttpPost]
+        [HttpPost("create", Name = "create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Post(Season season)
+        public IActionResult Create(Season season)
         {
-            APIResultData res = new APIResultData();
+            var result = _seasonsService.CreateSeason(season);
 
-            _seasonDAO.Seasons.Add(season);
-            res.ReturnedData = season;
-            res.StatusCode = 201;
-            res.StatusMessage = "Season added.";
-            res.Metadata = "Returned by F1 API, a free API for fans of Formula One!";
-            return CreatedAtAction(nameof(GetSeasonByYear), new { seasonYear = season.SeasonYear }, res);
+            if (result.StatusCode == 201)
+                return CreatedAtAction(nameof(GetSeasonByYear), new { seasonYear = season.SeasonYear }, result);
+
+            return BadRequest();
         }
 
         /// <summary>
@@ -116,23 +89,12 @@ namespace F1API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Update(int seasonYear, Season season)
         {
-            APIResultData res = new APIResultData();
+            var result = _seasonsService.UpdateSeason(seasonYear, season);
 
-            Season? _season = _seasonDAO.Seasons.SingleOrDefault(s => s.SeasonYear == seasonYear);
+            if (result.StatusCode == 404)
+                return NotFound(result);
 
-            if (_season == null)
-            {
-                res.ReturnedData = null;
-                res.StatusCode = 404;
-                res.StatusMessage = "The F1 season not found.";
-                res.Metadata = "Returned by F1 API, a free API for fans of Formula One!";
-                return NotFound(res);
-            }
-            else
-            {
-                _seasonDAO.UpdateSeasonData(season);
-                return NoContent();
-            }
+            return NoContent();
         }
 
         /// <summary>
@@ -147,28 +109,18 @@ namespace F1API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(int seasonYear)
         {
-            APIResultData res = new APIResultData();
+            var result = _seasonsService.DeleteSeason(seasonYear);
 
-            Season? _season = _seasonDAO.Seasons.SingleOrDefault(s => s.SeasonYear == seasonYear);
+            if (result.StatusCode == 404)
+                return NotFound(result);
 
-            if (_season == null)
-            {
-                res.ReturnedData = null;
-                res.StatusCode = 404;
-                res.StatusMessage = "The F1 season not found.";
-                res.Metadata = "Returned by F1 API, a free API for fans of Formula One!";
-                return NotFound(res);
-            }
-            else
-            {
-                _seasonDAO.DeleteSeasonData(seasonYear);
-                return NoContent();
-            }
+            return NoContent();
         }
 
-        public SeasonsController(SeasonDAO seasonDAO)
+        public SeasonsController(SeasonsDAO seasonDAO, ISeasonsService seasonsService)
         {
             _seasonDAO = seasonDAO;
+            _seasonsService = seasonsService;
         }
     }
 }
