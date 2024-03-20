@@ -2,6 +2,7 @@
 using F1API.Models;
 using F1API.Responses;
 using F1API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace F1API.Controllers
@@ -64,6 +65,7 @@ namespace F1API.Controllers
         /// <response code="201">Sucess.</response>
         /// <response code="400">If some parameter is invalid.</response>
         [HttpPost("create", Name = "create")]
+        [Authorize(Roles = "authorized_guess")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Create(Season season)
@@ -85,6 +87,7 @@ namespace F1API.Controllers
         /// <response code="404">If the parameter seasonYear was invalid.</response>
         /// <returns>Status code 204 for sucess and 404 if the parameter seasonYear was invalid.</returns>
         [HttpPut("{seasonYear}")]
+        [Authorize(Roles = "authorized_guess")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Update(int seasonYear, Season season)
@@ -105,6 +108,7 @@ namespace F1API.Controllers
         /// <response code="404">If the parameter seasonYear was invalid.</response>
         /// <returns>Status code 204 for sucess and 404 if the parameter seasonYear was invalid.</returns>
         [HttpDelete("{seasonYear}")]
+        [Authorize(Roles = "authorized_guess")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(int seasonYear)

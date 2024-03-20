@@ -23,21 +23,21 @@ namespace F1API.Services
             {
                 if (user.Username == "sid.watkins" && user.Password == "5&nn@")
                 {
-                    var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] ?? String.Empty));
-                    var issuer = _configuration["JWT:Issuer"];
-                    var audience = _configuration["JWT:Audience"];
-                    var signinCredentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
-                    var tokenOptions = new JwtSecurityToken(
-                        issuer: issuer,
-                        audience: audience,
+                    var _secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] ?? String.Empty));
+                    var _issuer = _configuration["JWT:Issuer"];
+                    var _audience = _configuration["JWT:Audience"];
+                    var _signinCredentials = new SigningCredentials(_secretkey, SecurityAlgorithms.HmacSha256);
+                    var _tokenOptions = new JwtSecurityToken(
+                        issuer: _issuer,
+                        audience: _audience,
                         claims: new[] {
                             new Claim(type: ClaimTypes.Name, user.Username),
                             new Claim(type: ClaimTypes.Role, "authorized_guess")
                         },
                         expires: DateTime.UtcNow.AddDays(1),
-                        signingCredentials: signinCredentials);
+                        signingCredentials: _signinCredentials);
 
-                    var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                    var token = new JwtSecurityTokenHandler().WriteToken(_tokenOptions);
 
                     return token;
                 }
