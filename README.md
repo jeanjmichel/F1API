@@ -17,7 +17,7 @@ This is repository still under construction yet, and is in a very basic status, 
 | Next features :rocket: |
 | ------------ |
 | :white_check_mark: ~~Conclusion the CRUD operation.~~ |
-| Addition of an access control to POST/PUT/DELETE methods.|
+| :white_check_mark: ~~Addition of an access control to POST/PUT/DELETE methods.~~|
 | :white_check_mark: ~~Service layer implementation to decouple Controllers from Models.~~|
 | Use of AI to do smart searches.|
 | Change the infrastructure to the cloud (Azure).|
