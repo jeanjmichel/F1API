@@ -36,7 +36,7 @@ namespace F1API.Controllers
         /// This method searchs for one especific F1 season by the year of the season.
         /// </summary>
         /// <param name="seasonYear">The year of the season (example: 1990).</param>
-        /// <returns>The season data (year, races, countries, 1st race and last race of the season and driver's champion and constructor's champion) wheen the parameter is a valid F1 season year, or will returns 404.</returns>
+        /// <returns>The season data (year, races, countries, 1st race and last race of the season and driver's champion and constructor's champion) when the parameter is a valid F1 season year, or will returns 404.</returns>
         /// <response code="200">Sucess.</response>
         /// <response code="400">Invalid parameter.</response>
         /// <response code="404">No season found.</response>
@@ -61,13 +61,15 @@ namespace F1API.Controllers
         /// This method creates a F1 season.
         /// </summary>
         /// <param name="season">A JSON that represents a F1 Season.</param>
-        /// <returns>The season data (year, races, countries, 1st race and last race of the season and driver's champion and constructor's champion) of created F1 season, or will returns some error if the parameter is invalid.</returns>
+        /// <returns>The season data (year, races, countries, 1st race and last race of the season and driver's champion and constructor's champion) of created F1 season, or will returns some error if the parameter is invalid or access is unauthorized.</returns>
         /// <response code="201">Sucess.</response>
         /// <response code="400">If some parameter is invalid.</response>
+        /// <response code="401">If the header JWT Bearer token is invalid.</response>
         [HttpPost("create", Name = "create")]
         [Authorize(Roles = "authorized_guess")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult Create(Season season)
         {
             var result = _seasonsService.CreateSeason(season);
@@ -84,11 +86,13 @@ namespace F1API.Controllers
         /// <param name="seasonYear">The year of the season (example: 1990).</param>
         /// <param name="season">A JSON that represents a F1 Season.</param>
         /// <response code="204">Sucess.</response>
-        /// <response code="404">If the parameter seasonYear was invalid.</response>
-        /// <returns>Status code 204 for sucess and 404 if the parameter seasonYear was invalid.</returns>
+        /// <response code="401">If the header JWT Bearer token is invalid.</response>
+        /// <response code="404">If the parameter seasonYear is invalid.</response>
+        /// <returns>Status code 204 for sucess, 401 if access is unauthorized or 404 if the parameter seasonYear is invalid.</returns>
         [HttpPut("{seasonYear}")]
         [Authorize(Roles = "authorized_guess")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Update(int seasonYear, Season season)
         {
@@ -105,11 +109,13 @@ namespace F1API.Controllers
         /// </summary>
         /// <param name="seasonYear">The year of the season (example: 1990).</param>
         /// <response code="204">Sucess.</response>
-        /// <response code="404">If the parameter seasonYear was invalid.</response>
-        /// <returns>Status code 204 for sucess and 404 if the parameter seasonYear was invalid.</returns>
+        /// <response code="401">If the header JWT Bearer token is invalid.</response>
+        /// <response code="404">If the parameter seasonYear is invalid.</response>
+        /// <returns>Status code 204 for sucess, 401 if access is unauthorized or 404 if the parameter seasonYear is invalid .</returns>
         [HttpDelete("{seasonYear}")]
         [Authorize(Roles = "authorized_guess")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(int seasonYear)
         {
