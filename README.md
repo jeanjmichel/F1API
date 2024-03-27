@@ -8,6 +8,7 @@ This is a basic study about REST API build with ASP .NET Core.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-gren.svg)](https://opensource.org/licenses/MIT)
 ![Workflow Status](https://github.com/jeanjmichel/F1API/actions/workflows/dotnet.yml/badge.svg)
+[![GitHub Release](https://img.shields.io/github/release/jeanjmichel/F1API.svg?style=flat)]()  
 [![GitHub last commit](https://img.shields.io/github/last-commit/jeanjmichel/F1API.svg?style=flat)]()
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/jeanjmichel/F1API.svg?style=flat)]()
 [![Donate](https://img.shields.io/badge/$-support-FE342D.svg?style=flat)](https://ko-fi.com/jeanjmichel)
